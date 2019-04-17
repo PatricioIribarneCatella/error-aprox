@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include <string.h>
 #include <math.h>
 
 /* Constantes matemáticas */
@@ -68,62 +69,64 @@
 #define A33 -0.5384693101
 #define A34 -0.9061798459
 
-typedef float coeficientes_t[CANTIDAD_DE_FILAS][CANTIDAD_DE_COLUMNAS];
-typedef float alpha_t[CANTIDAD_DE_FILAS][CANTIDAD_DE_COLUMNAS];
+typedef double matriz_t[CANTIDAD_DE_FILAS][CANTIDAD_DE_COLUMNAS];
+typedef double matriz_t[CANTIDAD_DE_FILAS][CANTIDAD_DE_COLUMNAS];
 
-static float* inicializar_arreglo(float* arreglo) {
-
+static void inicializar_arreglo(double* arreglo) {
+/*
 	for (int i = 0; i < CANTIDAD_DE_RESULTADOS; i++) {
 		arreglo[i] = 0;
 	}
+*/
+	memset(arreglo, 0, sizeof(double)*CANTIDAD_DE_RESULTADOS);
 }
 
-static coeficientes_t* inicializar_matriz_coeficientes(coeficientes_t* matriz) {
+static void inicializar_matriz_coeficientes(matriz_t* matriz) {
 
-	*matriz[0][0] = C00;
-	*matriz[0][1] = C01;
-	*matriz[0][2] = 0;
-	*matriz[0][3] = 0;
-	*matriz[0][4] = 0;
-	*matriz[1][0] = C10;
-	*matriz[1][1] = C11;
-	*matriz[1][2] = C12;
-	*matriz[1][3] = 0;
-	*matriz[1][4] = 0;
-	*matriz[2][0] = C20;
-	*matriz[2][1] = C21;
-	*matriz[2][2] = C22;
-	*matriz[2][3] = C23;
-	*matriz[2][4] = 0;
-	*matriz[3][0] = C30;
-	*matriz[3][1] = C31;
-	*matriz[3][2] = C32;
-	*matriz[3][3] = C33;
-	*matriz[3][4] = C34;
+	*(matriz[0][0]) = (double)C00;
+	*matriz[0][1] = (double)C01;
+	*matriz[0][2] = (double)0.0;
+	*matriz[0][3] = (double)0.0;
+	*matriz[0][4] = (double)0.0;
+	*matriz[1][0] = (double)C10;
+	*matriz[1][1] = (double)C11;
+	*matriz[1][2] = (double)C12;
+	*matriz[1][3] = (double)0.0;
+	*matriz[1][4] = (double)0.0;
+	*matriz[2][0] = (double)C20;
+	*matriz[2][1] = (double)C21;
+	*matriz[2][2] = (double)C22;
+	*matriz[2][3] = (double)C23;
+	*matriz[2][4] = (double)0.0;
+	*matriz[3][0] = (double)C30;
+	*matriz[3][1] = (double)C31;
+	*matriz[3][2] = (double)C32;
+	*matriz[3][3] = (double)C33;
+	*matriz[3][4] = (double)C34;
 }
 
-static alpha_t* inicializar_matriz_alpha(alpha_t* matriz) {
+static void inicializar_matriz_alpha(matriz_t* matriz) {
 
-	*matriz[0][0] = A00;
-	*matriz[0][1] = A01;
-	*matriz[0][2] = 0;
-	*matriz[0][3] = 0;
-	*matriz[0][4] = 0;
-	*matriz[1][0] = A10;
-	*matriz[1][1] = A11;
-	*matriz[1][2] = A12;
-	*matriz[1][3] = 0;
-	*matriz[1][4] = 0;
-	*matriz[2][0] = A20;
-	*matriz[2][1] = A21;
-	*matriz[2][2] = A22;
-	*matriz[2][3] = A23;
-	*matriz[2][4] = 0;
-	*matriz[3][0] = A30;
-	*matriz[3][1] = A31;
-	*matriz[3][2] = A32;
-	*matriz[3][3] = A33;
-	*matriz[3][4] = A34;
+	*matriz[0][0] = (double)A00;
+	*matriz[0][1] = (double)A01;
+	*matriz[0][2] = (double)0.0;
+	*matriz[0][3] = (double)0.0;
+	*matriz[0][4] = (double)0.0;
+	*matriz[1][0] = (double)A10;
+	*matriz[1][1] = (double)A11;
+	*matriz[1][2] = (double)A12;
+	*matriz[1][3] = (double)0.0;
+	*matriz[1][4] = (double)0.0;
+	*matriz[2][0] = (double)A20;
+	*matriz[2][1] = (double)A21;
+	*matriz[2][2] = (double)A22;
+	*matriz[2][3] = (double)A23;
+	*matriz[2][4] = (double)0.0;
+	*matriz[3][0] = (double)A30;
+	*matriz[3][1] = (double)A31;
+	*matriz[3][2] = (double)A32;
+	*matriz[3][3] = (double)A33;
+	*matriz[3][4] = (double)A34;
 }
 
 /* ******************************************************************
@@ -150,6 +153,8 @@ static double erf_k(float x, int k, int numero_de_serie) {
 			return ((pow(-1, k)*pow(x, 2*k+1))/((2*k+1)*factorial(k)));
 		case SEGUNDA_SERIE:
 			return ((pow(E, (-1)*(pow(x, 2))))*pow(2, 2*k)*factorial(k)*(pow(x, 2*k+1))/factorial(2*k+1));
+		default:
+			return -1;
 	}
 }
 
@@ -171,30 +176,45 @@ double erf_aproximada(float x, float error, int tipo_de_serie_usada) {
  *        FUNCION ERROR CALCULADA PARA LA TERCER SERIE
  * ******************************************************************/
 
-static void inicializar(coeficientes_t* c, alpha_t* a, float* res) {
+static void inicializar(matriz_t* c, matriz_t* a, double* res) {
 
 	inicializar_matriz_coeficientes(c);
 	inicializar_matriz_alpha(a);
 	inicializar_arreglo(res);
 }
 
-void erf_cuadratura_de_Gauss(double* resultados) {
+void print_matrix(matriz_t m, const char* name){
+
+	printf("matrix: %s\n", name);
+
+	for (int i = 0; i < CANTIDAD_DE_FILAS; i++) {
+		for (int j = 0; j < CANTIDAD_DE_COLUMNAS; j++) {
+			printf("%lf ", m[i][j]);
+		}
+		printf("\n");
+	}
+}
+
+void erf_cuadratura_gauss(double* resultados) {
 
 	//
 	// Se evaluará la función ERF(x)
 	// solamente en x = 1
 	//
 
-	coeficientes_t c;
-	alpha_t alpha;
+	matriz_t c;
+	matriz_t alpha;
 
-	inicializar(&c, &alpha, &resultados);
+	inicializar(&c, &alpha, resultados);
+
+	print_matrix(c, "c-matrix");
+	print_matrix(alpha, "alpha-matrix");
 
 	for (int i = 0; i < CANTIDAD_DE_RESULTADOS; i++) {
 
 		for (int j = 0; j < i + 2; j++) {
 
-			resultados[i] = resultados[i] + (*c[i][j])*pow(E, (*alpha[i][j]));
+			resultados[i] = resultados[i] + c[i][j] * pow(E, alpha[i][j]);
 		}
 	}
 }
@@ -202,25 +222,25 @@ void erf_cuadratura_de_Gauss(double* resultados) {
 int main(void) {
 
 	printf("PRIMERA PARTE - ERF(1)\n");
-	printf("Error: 10^(-4) - Resultado: %lf", erf_aproximada(1, pow(10, -4), PRIMERA_SERIE));
-	printf("Error: 10^(-6) - Resultado: %lf", erf_aproximada(1, pow(10, -6), PRIMERA_SERIE));
-	printf("Error: 10^(-8) - Resultado: %lf", erf_aproximada(1, pow(10, -8), PRIMERA_SERIE));
+	printf("Error: 10^(-4) - Resultado: %lf\n", erf_aproximada(1, pow(10, -4), PRIMERA_SERIE));
+	printf("Error: 10^(-6) - Resultado: %lf\n", erf_aproximada(1, pow(10, -6), PRIMERA_SERIE));
+	printf("Error: 10^(-8) - Resultado: %lf\n", erf_aproximada(1, pow(10, -8), PRIMERA_SERIE));
 
 	printf("SEGUNDA PARTE - ERF(1)\n");
-	printf("Error: 10^(-4) - Resultado: %lf", erf_aproximada(1, pow(10, -4), SEGUNDA_SERIE));
-	printf("Error: 10^(-6) - Resultado: %lf", erf_aproximada(1, pow(10, -6), SEGUNDA_SERIE));
-	printf("Error: 10^(-8) - Resultado: %lf", erf_aproximada(1, pow(10, -8), SEGUNDA_SERIE));
+	printf("Error: 10^(-4) - Resultado: %lf\n", erf_aproximada(1, pow(10, -4), SEGUNDA_SERIE));
+	printf("Error: 10^(-6) - Resultado: %lf\n", erf_aproximada(1, pow(10, -6), SEGUNDA_SERIE));
+	printf("Error: 10^(-8) - Resultado: %lf\n", erf_aproximada(1, pow(10, -8), SEGUNDA_SERIE));
 
 	printf("TERCERA PARTE - ERF(1)\n");
 	printf("Gauss-Legendre\n");
 	
 	double resultados[CANTIDAD_DE_RESULTADOS];
-	erf_cuadratura_de_Gauss(&resultados);
+	erf_cuadratura_gauss(resultados);
 
-	printf("n = 2 - Resultado: %lf", resultados[0]);
-	printf("n = 3 - Resultado: %lf", resultados[1]);
-	printf("n = 4 - Resultado: %lf", resultados[2]);
-	printf("n = 5 - Resultado: %lf", resultados[3]);
+	printf("n = 2 - Resultado: %lf\n", resultados[0]);
+	printf("n = 3 - Resultado: %lf\n", resultados[1]);
+	printf("n = 4 - Resultado: %lf\n", resultados[2]);
+	printf("n = 5 - Resultado: %lf\n", resultados[3]);
 
 	return 0;
 }

@@ -106,7 +106,7 @@ function [ resultado ] = erf_aproximada(x, error, tipo_de_serie_usada)
 
 	end
 
-	[resultado] = sumatoria * (2 ./ (sqrt( "pi" )));
+	[resultado] = sumatoria * (2 ./ sqrt("pi"));
 end
 
 #*****************************************************************
@@ -127,7 +127,7 @@ function [ resultados ] = erf_aproximada_cuadratura_de_Gauss_en_uno()
 
 			alpha_cuadrado = realpow(matriz_de_coeficientes_alpha(i)(j), 2);
 
-			resultados(i) = resultados(i) +  c(i)(j) * realpow("e", (-1) * alpha_cuadrado) ./sqrt("pi");
+			resultados(i) = resultados(i) + c(i)(j) * realpow("e", (-1) * alpha_cuadrado) ./ sqrt("pi");
 		end
 	end
 end

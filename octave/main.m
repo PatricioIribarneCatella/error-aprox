@@ -1,23 +1,24 @@
-#
-# Utiliza dos series para aproximar la evaluación
-# de la función ERF(x).
-#
-# También el método de la cuadratura de 
-# Gauss-Legendre
-#
-
-PRIMERA_SERIE = 1
-SEGUNDA_SERIE = 2
+%
+% Utiliza dos series para aproximar la evaluación
+% de la función ERF(x).
+%
+% También el método de la cuadratura de 
+% Gauss-Legendre
+%
 
 printf("PRIMERA PARTE - ERF(1)\n")
-printf("Error: 10^(-4) - Resultado: %ld\n", erf_aprox(1, realpow(10, -4), PRIMERA_SERIE));
-printf("Error: 10^(-6) - Resultado: %ld\n", erf_aprox(1, realpow(10, -6), PRIMERA_SERIE));
-printf("Error: 10^(-8) - Resultado: %ld\n", erf_aprox(1, realpow(10, -8), PRIMERA_SERIE));
+
+printf("Error: 10^(-4) - Resultado: %ld\n", erf_aprox(1, realpow(10, -4), cons("PRIMERA_SERIE")));
+printf("Error: 10^(-6) - Resultado: %ld\n", erf_aprox(1, realpow(10, -6), cons("PRIMERA_SERIE")));
+printf("Error: 10^(-8) - Resultado: %ld\n", erf_aprox(1, realpow(10, -8), cons("PRIMERA_SERIE")));
+printf("\n");
 
 printf("SEGUNDA PARTE - ERF(1)\n");
-printf("Error: 10^(-4) - Resultado: %ld\n", erf_aprox(1, realpow(10, -4), SEGUNDA_SERIE));
-printf("Error: 10^(-6) - Resultado: %ld\n", erf_aprox(1, realpow(10, -6), SEGUNDA_SERIE));
-printf("Error: 10^(-8) - Resultado: %ld\n", erf_aprox(1, realpow(10, -8), SEGUNDA_SERIE));
+
+printf("Error: 10^(-4) - Resultado: %ld\n", erf_aprox(1, realpow(10, -4), cons("SEGUNDA_SERIE")));
+printf("Error: 10^(-6) - Resultado: %ld\n", erf_aprox(1, realpow(10, -6), cons("SEGUNDA_SERIE")));
+printf("Error: 10^(-8) - Resultado: %ld\n", erf_aprox(1, realpow(10, -8), cons("SEGUNDA_SERIE")));
+printf("\n");
 
 printf("TERCERA PARTE - ERF(1) - Gauss-Legendre\n");
 

@@ -1,32 +1,13 @@
-#*****************************************************************
-#           FUNCION ERROR CALCULADA PARA SERIES 1 Y 2
-#*****************************************************************
 
-function [ resultado ] = erf_k(x, k, serie)
+function [resultado] = erf_aprox(x, error, serie)
 
-	if (serie == 1)
-
-		a = realpow(-1, k);
-
-		b = realpow(x, 2*k+1);
-
-		c = (2 * k + 1)*factorial(k);
-
-		resultado = (( a * b ) ./ c );
-
-	else
-		a =  realpow(E, (-1) * realpow(x, 2));
-
-		b =  realpow(2, 2*k);
-
-		c =  realpow(x, 2*k+1);
-
-		resultado = (a * b * factorial(k) * c) ./ factorial(2*k+1);
-	end
-end
-
-
-function [ resultado ] = erf_aprox(x, error, serie)
+% ENTRADA
+	% x: valor de la función a evaluar
+	% error: tolerancia
+	% serie: n° de serie utilizada
+% SALIDA
+	% resultado: valor númerico de
+	%  aproximar erf(x)
 
 	k = 0;
 
@@ -36,10 +17,9 @@ function [ resultado ] = erf_aprox(x, error, serie)
 
 		k = k + 1;
 
-		[ nueva_suma ] = erf_k(x, k, serie);
+		nueva_suma = erf_k(x, k, serie);
 
 		sumatoria = sumatoria + nueva_suma;
-
 	end
 
 	[resultado] = sumatoria * (2 ./ sqrt(pi));

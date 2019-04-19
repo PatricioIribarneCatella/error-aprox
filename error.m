@@ -2,9 +2,6 @@
 #                  AUXILIARES + INICIALIZACION
 #*****************************************************************
 
-global e = 2.7182818285;
-global pi = 3.1415926536;
-
 global CANTIDAD_DE_RESULTADOS = 4;
 global CANTIDAD_DE_FILAS = 4;
 global CANTIDAD_DE_COLUMNAS = 5;
@@ -106,7 +103,7 @@ function [ resultado ] = erf_aproximada(x, error, tipo_de_serie_usada)
 
 	end
 
-	[resultado] = sumatoria * (2 ./ sqrt("pi"));
+	[resultado] = sumatoria * (2 ./ sqrt(pi));
 end
 
 #*****************************************************************
@@ -127,8 +124,13 @@ function [ resultados ] = erf_aproximada_cuadratura_de_Gauss_en_uno()
 
 			alpha_cuadrado = realpow(matriz_de_coeficientes_alpha(i)(j), 2);
 
-			resultados(i) = resultados(i) + c(i)(j) * realpow("e", (-1) * alpha_cuadrado) ./ sqrt("pi");
+			resultados(i) = resultados(i) + c(i)(j) * realpow("e", (-1) * alpha_cuadrado) ./ sqrt(pi);
 		end
 	end
 end
 
+function [] = main()
+	printf("resultado: %ld\n", erf_aproximada(1, realpow(10, -4), 1));
+end
+
+main()

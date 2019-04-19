@@ -162,16 +162,12 @@ int main(void) {
 	printf("Error: 10^(-4) - Resultado: %lf\n", erf_aproximada(1, pow(10, -4), PRIMERA_SERIE));
 	printf("Error: 10^(-6) - Resultado: %lf\n", erf_aproximada(1, pow(10, -6), PRIMERA_SERIE));
 	printf("Error: 10^(-8) - Resultado: %lf\n", erf_aproximada(1, pow(10, -8), PRIMERA_SERIE));
-	printf("Error: 10^(-10) - Resultado: %lf\n", erf_aproximada(1, pow(10, -10), PRIMERA_SERIE));
-	printf("Error: 10^(-12) - Resultado: %lf\n", erf_aproximada(1, pow(10, -12), PRIMERA_SERIE));
 	printf("\n");
 
 	printf("SEGUNDA PARTE - ERF(1)\n");
 	printf("Error: 10^(-4) - Resultado: %lf\n", erf_aproximada(1, pow(10, -4), SEGUNDA_SERIE));
 	printf("Error: 10^(-6) - Resultado: %lf\n", erf_aproximada(1, pow(10, -6), SEGUNDA_SERIE));
 	printf("Error: 10^(-8) - Resultado: %lf\n", erf_aproximada(1, pow(10, -8), SEGUNDA_SERIE));
-	printf("Error: 10^(-10) - Resultado: %lf\n", erf_aproximada(1, pow(10, -10), SEGUNDA_SERIE));
-	printf("Error: 10^(-12) - Resultado: %lf\n", erf_aproximada(1, pow(10, -12), SEGUNDA_SERIE));
 	printf("\n");
 
 	printf("TERCERA PARTE - ERF(1)\n");

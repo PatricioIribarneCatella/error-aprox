@@ -94,7 +94,7 @@ function [ resultado ] = erf_aproximada(x, error, tipo_de_serie_usada)
 
 	k = 0;
 
-	sumatoria  = erf_k(x, k, tipo_de_serie_usada);
+	sumatoria = erf_k(x, k, tipo_de_serie_usada);
 
 	while abs(erf_k(x, k, tipo_de_serie_usada)) > error
 

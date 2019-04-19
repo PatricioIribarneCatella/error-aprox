@@ -17,17 +17,17 @@
 #include <string.h>
 #include <math.h>
 
-/* Constantes matemáticas */
-
-#define PI 3.1415926536
-#define E 2.7182818285
-
 #define CANTIDAD_DE_RESULTADOS 4
 #define CANTIDAD_DE_COLUMNAS 5
 #define CANTIDAD_DE_FILAS 4
 
 #define PRIMERA_SERIE 1
 #define SEGUNDA_SERIE 2
+
+/* Constantes matemáticas */
+
+#define PI 3.1415926536
+#define E 2.7182818285
 
 /* coeficientes 'C' */
 
@@ -69,6 +69,10 @@
 #define A33 -0.5384693101
 #define A34 -0.9061798459
 
+/* ******************************************************************
+ *        	AUXILIAR Y DEFINICIÓN DE MATRICES
+ * ******************************************************************/
+
 typedef double matriz_t[CANTIDAD_DE_FILAS][CANTIDAD_DE_COLUMNAS];
 
 matriz_t coeficientes_c = {{C00, C01, 0.0, 0.0, 0.0},
@@ -80,7 +84,6 @@ matriz_t coeficientes_alpha = {{A00, A01, 0.0, 0.0, 0.0},
 			       {A10, A11, A12, 0.0, 0.0},
 			       {A20, A21, A22, A23, 0.0},
 			       {A30, A31, A32, A33, A34}};
-
 
 static void inicializar_arreglo(double* arreglo) {
 
@@ -104,9 +107,9 @@ static int factorial(int k) {
 	return fact;
 }
 
-static double erf_k(float x, int k, int numero_de_serie) {
+static double erf_k(float x, int k, int serie_usada) {
 
-	switch (numero_de_serie) {
+	switch (serie_usada) {
 		case PRIMERA_SERIE:
 			return ((pow(-1, k)*pow(x, 2*k+1))/((2*k+1)*factorial(k)));
 		case SEGUNDA_SERIE:
@@ -116,15 +119,15 @@ static double erf_k(float x, int k, int numero_de_serie) {
 	}
 }
 
-double erf_aproximada(float x, float error, int tipo_de_serie_usada) {
+double erf_aproximada(float x, double error, int serie_usada) {
 
 	int k = 0;
 
-	double suma = erf_k(x, k, tipo_de_serie_usada);
+	double suma = erf_k(x, k, serie_usada);
 
-	while (abs(erf_k(x, k, tipo_de_serie_usada)) > error) {
+	while (abs(erf_k(x, k, serie_usada)) > error) {
 
-		k++; suma = suma + erf_k(x, k, tipo_de_serie_usada);
+		k++; suma = suma + erf_k(x, k, serie_usada);
 	}
 
 	return (suma*(2/(sqrt(PI))));
@@ -159,12 +162,16 @@ int main(void) {
 	printf("Error: 10^(-4) - Resultado: %lf\n", erf_aproximada(1, pow(10, -4), PRIMERA_SERIE));
 	printf("Error: 10^(-6) - Resultado: %lf\n", erf_aproximada(1, pow(10, -6), PRIMERA_SERIE));
 	printf("Error: 10^(-8) - Resultado: %lf\n", erf_aproximada(1, pow(10, -8), PRIMERA_SERIE));
+	printf("Error: 10^(-10) - Resultado: %lf\n", erf_aproximada(1, pow(10, -10), PRIMERA_SERIE));
+	printf("Error: 10^(-12) - Resultado: %lf\n", erf_aproximada(1, pow(10, -12), PRIMERA_SERIE));
 	printf("\n");
 
 	printf("SEGUNDA PARTE - ERF(1)\n");
 	printf("Error: 10^(-4) - Resultado: %lf\n", erf_aproximada(1, pow(10, -4), SEGUNDA_SERIE));
 	printf("Error: 10^(-6) - Resultado: %lf\n", erf_aproximada(1, pow(10, -6), SEGUNDA_SERIE));
 	printf("Error: 10^(-8) - Resultado: %lf\n", erf_aproximada(1, pow(10, -8), SEGUNDA_SERIE));
+	printf("Error: 10^(-10) - Resultado: %lf\n", erf_aproximada(1, pow(10, -10), SEGUNDA_SERIE));
+	printf("Error: 10^(-12) - Resultado: %lf\n", erf_aproximada(1, pow(10, -12), SEGUNDA_SERIE));
 	printf("\n");
 
 	printf("TERCERA PARTE - ERF(1)\n");

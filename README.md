@@ -14,7 +14,8 @@ $ make run
 - Versión en **Octave/Matlab**
 
 ```bash
-$ octave error.m
+$ cd octave
+$ octave main.m
 ```
 
 ### Clean

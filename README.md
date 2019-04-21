@@ -1,6 +1,6 @@
 # TP-Error
 
-Teoría del error y de la aproximación (Análsis Numérico I)
+Teoría del error y de la aproximación (_Análsis Numérico I - FIUBA_)
 
 ### Run
 
